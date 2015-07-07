@@ -1,0 +1,65 @@
+[
+    {  
+        "title": "Facebook",
+        "href": "https://www.facebook.com/sharer/sharer.php?src=bm&u=currentUrl&t=currentTitle&v=3", 
+        "image": "https://cdn.loc.gov/share/images/icons/bm_facebook.gif",
+        "class" : "facebook",
+        "popularity": 1
+    },
+    {
+        "title": "Twitter",
+        "href": "http://twitter.com/home?status=currentTitle%20-%20currentUrl",
+        "image": "https://cdn.loc.gov/share/images/icons/bm_twitter.gif",
+        "class" : "twitter",
+        "popularity": 2
+    },
+    {
+        "title": "Yahoo!",
+        "href": "http://bookmarks.yahoo.com/toolbar/savebm?opener=tb&u=currentUrl&t=currentTitle&d=",
+        "image": "https://cdn.loc.gov/share/images/icons/bm_yahoo.gif",
+        "class" : "yahoo",
+        "popularity":11 
+    },
+    {
+        "title": "StumbleUpon",
+        "href": "http://www.stumbleupon.com/submit?url=currentUrl&title=currentTitle",
+        "image": "https://cdn.loc.gov/share/images/icons/bm_stumbleupon.gif",
+        "class" : "stumbleupon",
+        "popularity": 9
+    },
+    {
+        "title": "Google+",
+        "href": "https://plus.google.com/share?url=currentUrl",
+        "image": "https://cdn.loc.gov/share/images/icons/google_plus.jpg",
+        "class" : "googleplus",
+        "popularity": 13
+    },
+    {
+        "title": "LinkedIn",
+        "href": "http://www.linkedin.com/shareArticle?mini=true&url=currentUrl&title=currentTitle",
+        "image": "https://cdn.loc.gov/share/images/icons/linkedin.jpg",
+        "class" : "linkedin",
+        "popularity": 12
+    },
+    {
+        "title": "Google",
+        "href": "http://www.google.com/bookmarks/mark?op=add&title=currentTitle&bkmk=currentUrl",
+        "image": "https://cdn.loc.gov/share/images/icons/bm_google.gif",
+        "class" : "google",
+        "popularity": 5
+    },
+    {
+        "title": "Reddit",
+        "href": "http://reddit.com/submit?url=currentUrl&title=currentTitle",
+        "image": "https://cdn.loc.gov/share/images/icons/bm_reddit.gif",
+        "class" : "reddit",
+        "popularity": 8
+    },
+    {
+        "title": "Tumblr",
+        "href": "http://www.tumblr.com/share/link?url=currentUrl&name=currentTitle",
+        "image": "https://cdn.loc.gov/share/images/icons/tumblr.jpg",
+        "class" : "tumblr",
+        "popularity": 14
+    }
+]

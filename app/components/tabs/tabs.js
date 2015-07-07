@@ -3,19 +3,22 @@
 angular
     .module('share')
     .directive('toolbar',[
-        function() {
+        'config',
+        function(config) {
             return {
                 restrict: 'AEC',
-                templateUrl: 'components/tabs/tabs.html'
+                templateUrl: config.template.tabs
             }
         }
     ])
     .controller('toolbarCtrl',[
         '$scope',
         '$http',
+        'config',
         function($scope,
-                 $http) {
-            $http.get('json/toolbar.json').success(function(data){
+                 $http,
+                 config) {
+            $http.get(config.json.toolbars).success(function(data){
                 $scope.tabs = data;
             });
             

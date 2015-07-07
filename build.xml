@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="sharetool" default="start">
+    
+    <!-- Set Properties -->
+    <property file="build.properties" />
+    
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="${ant-contrib.jar}"/>
+        </classpath>
+    </taskdef>
+    <!-- START -->
+    <target name="start" depends="remove-build-dir, create-build-dir, concat-bower-components, js-minify, manage-css, copy-images">
+        <echo>Start building</echo>
+    </target>
+   
+    <!-- Create Build Directory -->
+    <target name="create-build-dir" depends="remove-build-dir">
+        <echo>Create build Directory</echo>
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${build.dir}/images" />
+    </target>
+   
+    <!-- Remove build directory if exists -->
+    <target name="remove-build-dir">
+        <echo>Remove build directory</echo>           
+        <delete dir="${build.dir}" failonerror="false"/>
+    </target>
+    
+    <!-- concat-bower-components -->
+    <target name="concat-bower-components">
+        <echo>Concat bower components</echo>
+        
+        
+        <filelist id="bower" dir="${bower.components.dir}">
+            <file name="angular/angular.min.js" />
+            <file name="angular-route/angular-route.js" />
+        </filelist>
+        
+        <filelist id="global-variables" dir="${app.dir}">
+            <file name="global-variables.js" />       
+            
+        </filelist>
+        
+        <filelist id="load-angular" dir="${app.dir}">
+            <file name="load-angular.js" />
+        </filelist>
+        
+        <filelist id="app-js" dir="${app.dir}">
+            <file name="app.js" />
+        </filelist>
+        
+        <filelist id="hint-js" dir="${app.dir}">
+            <file name="hint.js" />
+        </filelist>
+        
+        <copy todir="${build.dir}" file="${app.dir}/hint.js"></copy>
+        <copy todir="${build.dir}" file="${app.dir}/bower_components/angular/angular.js"></copy>
+        <copy todir="${build.dir}/components">
+            <fileset dir="${app.dir}/components">
+                <include name="**/*.html"/>
+                <include name="**/*.json"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${build.dir}">
+            <fileset dir="${app.dir}">
+                <include name="**/*.json"/>
+            </fileset>
+        </copy>
+        
+        
+        
+        <filelist id="modernizer" dir="${bower.components.dir}/html5-boilerplate/js/vendor">
+            <file name="modernizr-2.6.2.min.js" />
+        </filelist>
+        
+        <filelist id="bootstrap" dir="${bootstrap.dir}">
+            
+        </filelist>
+        
+        <filelist id="ui-bootstrap" dir="${bootstrap.dir}">
+            <file name="ui.bootstrap.js" />
+            <file name="ui.bootstrap.tpl.js" />
+        </filelist>
+        
+        <filelist id="components" dir="${components.dir}">   
+            <file name="${config.dir}/config-controller.js" />
+            <file name="${config.dir}/config-service.js" />
+            <file name="${feedback.dir}/feedback-controller.js" />
+            <file name="${version.dir}/version.js" />
+            <file name="${version.dir}/version-directive.js" />
+            <file name="${version.dir}/interpolate-filter.js" />
+            <file name="${email.dir}/email-controller.js" />
+            <file name="${save.dir}/save-controller.js" />
+            <file name="${toolbar.dir}/toolbar-controller.js" />
+            <file name="${share.dir}/share-controller.js" />
+            <file name="${subscription.dir}/susbcription.js" />
+            <file name="${helper.dir}/helper-controller.js" />
+            <file name="${service.dir}/url-service.js" />
+            <file name="${log.dir}/log-service.js" />            
+        </filelist>
+        
+        <filelist id="angular-modules" dir="${bower.components.dir}">
+            <file name="angular/angular.min.js.map" />
+        </filelist>
+            
+        <echo>Concatenating Bower Components into one file</echo>
+        <concat destfile="${build.dir}/share.js">
+            <filelist refid="global-variables" />
+            <filelist refid="load-angular" />
+            <filelist refid="modernizer" />
+            <filelist refid="bootstrap" />
+            <filelist refid="bower" />              
+            <filelist refid="ui-bootstrap" />
+            <filelist refid="app-js" />         
+            <filelist refid="components" />
+        </concat>
+        
+        <echo>Concatenating Bower Components into one file with version</echo>
+        <concat destfile="${build.dir}/share-${VERSION}.js">
+            <filelist refid="global-variables" />
+            <filelist refid="load-angular" />
+            <filelist refid="modernizer" />
+            <filelist refid="bootstrap" />
+            <filelist refid="bower" />              
+            <filelist refid="ui-bootstrap" />
+            <filelist refid="app-js" />         
+            <filelist refid="components" />
+        </concat>
+        
+        <replace file="${build.dir}/share.js" token="@env@" value="${env}" />
+        <replace file="${build.dir}/share-${VERSION}.js" token="@env@" value="${env}" />
+        
+        <replace file="${build.dir}/share.js" token="@ppath@" value="${ppath}" />
+        <replace file="${build.dir}/share-${VERSION}.js" token="@ppath@" value="${ppath}" />
+        
+        <replace file="${build.dir}/share.js" token="@domain@" value="${domain}" />
+        <replace file="${build.dir}/share-${VERSION}.js" token="@domain@" value="${domain}" />
+        
+        <concat destfile="${build.dir}/angular.min.js.map">
+            <filelist refid="angular-modules" />
+        </concat>
+    </target>
+    <target name="show-share">
+        <echo>Show share</echo>
+    </target>
+   
+    <target name="js-minify">
+        <echo>Minifying share.js</echo>
+        <exec executable="java" output="${build.dir}/share.min.js">
+           <arg line="-jar ${yuicompressor} --type js ${build.dir}/share.js "/>
+        </exec> 
+        <exec executable="java" output="${build.dir}/share-${VERSION}.min.js">
+           <arg line="-jar ${yuicompressor} --type js ${build.dir}/share.js "/>
+        </exec>
+    </target>
+    
+    
+    
+    <target name="list-file">
+        <basename property="base.name" file="${theFile}"/>      
+        <basename property="file.name" file="${theFile}" suffix=".js"/>
+        <echo>${base.name} -- ${file.name}</echo>
+        <concat destfile="${build.dir}/sites/${base.name}">
+            <filelist id="${base.name}" dir="${app.dir}/sites">
+                <file name="${base.name}"></file>
+            </filelist>
+            <filelist id="global-variables" dir="${app.dir}">
+                <file name="global-variables.js" />
+            </filelist>
+            <filelist id="bootstrap" dir="${app.dir}">
+                <file name="bootstrap.js" />
+            </filelist>
+        </concat>
+        <replace file="${build.dir}/sites/${base.name}" token="@version@" value="${VERSION}" />
+        <replace file="${build.dir}/sites/${base.name}" token="@env@" value="${env}" />
+        <replace file="${build.dir}/sites/${base.name}" token="@ppath@" value="${ppath}" />
+        <replace file="${build.dir}/sites/${base.name}" token="@domain@" value="${domain}" />
+        
+    </target>
+    
+    <target name="manage-css">
+       <filelist id="css" dir="${app.dir}/css">
+           <file name="bootstrap-3.3.1.min.css" />
+           <file name="share.css" />
+           <file name="general.css" />
+       </filelist>
+       
+       <filelist id="bower-css" dir="${bower.components.dir}/html5-boilerplate/css">
+           <file name="normalize.css" />
+           <file name="main.css" />
+       </filelist>
+       <echo>Generate css file with version</echo>
+       <concat destfile="${build.dir}/share-${VERSION}.css">
+           <filelist refid="bower-css" />
+           <filelist refid="css" />
+       </concat>
+       
+      
+       
+       <echo>Generate css file without version</echo>
+       <concat destfile="${build.dir}/share.css">
+           <filelist refid="bower-css" />
+           <filelist refid="css" />
+       </concat>
+       
+       <echo>Minify share.min.css</echo>
+       <exec executable="java" output="${build.dir}/share.min.css">
+           <arg line="-jar ${yuicompressor} --type css ${build.dir}/share.css "/>
+        </exec>
+        <echo>Minify share-${VERSION}.css</echo>
+       <exec executable="java" output="${build.dir}/share-${VERSION}.min.css">
+           <arg line="-jar ${yuicompressor} --type css ${build.dir}/share.css "/>
+        </exec>  
+    </target>
+    
+    <target name="copy-images">
+        <echo>copy images</echo>
+        <copy todir="${build.dir}/images" >  
+            <fileset dir="${app.dir}/images" includes="**"/>  
+        </copy>
+    </target>
+</project>
