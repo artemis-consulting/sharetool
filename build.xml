@@ -71,34 +71,30 @@
         
         
         
-        <filelist id="modernizer" dir="${bower.components.dir}/html5-boilerplate/js/vendor">
-            <file name="modernizr-2.6.2.min.js" />
+        <filelist id="modernizer" dir="${bower.components.dir}/html5-boilerplate/dist/js/vendor">
+            <file name="modernizr-2.8.3.min.js" />
         </filelist>
         
         <filelist id="bootstrap" dir="${bootstrap.dir}">
-            
+            <file name="dist/js/bootstrap.js" />
         </filelist>
-        
-        <filelist id="ui-bootstrap" dir="${bootstrap.dir}">
-            <file name="ui.bootstrap.js" />
-            <file name="ui.bootstrap.tpl.js" />
+        <echo>${angular_bootstrap.dir}</echo>
+
+        <filelist id="ui-bootstrap" dir="${angular_bootstrap.dir}">
+            <file name="ui-bootstrap.js" />
+            <file name="ui-bootstrap-tpls.js" />
         </filelist>
         
         <filelist id="components" dir="${components.dir}">   
-            <file name="${config.dir}/config-controller.js" />
-            <file name="${config.dir}/config-service.js" />
-            <file name="${feedback.dir}/feedback-controller.js" />
+            <file name="${config.dir}/config.js" />
             <file name="${version.dir}/version.js" />
             <file name="${version.dir}/version-directive.js" />
             <file name="${version.dir}/interpolate-filter.js" />
-            <file name="${email.dir}/email-controller.js" />
-            <file name="${save.dir}/save-controller.js" />
-            <file name="${toolbar.dir}/toolbar-controller.js" />
-            <file name="${share.dir}/share-controller.js" />
-            <file name="${subscription.dir}/susbcription.js" />
-            <file name="${helper.dir}/helper-controller.js" />
-            <file name="${service.dir}/url-service.js" />
-            <file name="${log.dir}/log-service.js" />            
+            <file name="${email.dir}/email.js" />
+            <file name="${tabs.dir}/tabs.js" />
+            <file name="${share.dir}/share.js" />
+            <file name="${service.dir}/url.js" />
+            <file name="${log.dir}/log.js" />            
         </filelist>
         
         <filelist id="angular-modules" dir="${bower.components.dir}">
@@ -108,12 +104,12 @@
         <echo>Concatenating Bower Components into one file</echo>
         <concat destfile="${build.dir}/share.js">
             <filelist refid="global-variables" />
+            <filelist refid="app-js" />
             <filelist refid="load-angular" />
             <filelist refid="modernizer" />
             <filelist refid="bootstrap" />
             <filelist refid="bower" />              
-            <filelist refid="ui-bootstrap" />
-            <filelist refid="app-js" />         
+            <filelist refid="ui-bootstrap" />                     
             <filelist refid="components" />
         </concat>
         
@@ -187,13 +183,10 @@
            <file name="general.css" />
        </filelist>
        
-       <filelist id="bower-css" dir="${bower.components.dir}/html5-boilerplate/css">
-           <file name="normalize.css" />
-           <file name="main.css" />
-       </filelist>
+       
        <echo>Generate css file with version</echo>
        <concat destfile="${build.dir}/share-${VERSION}.css">
-           <filelist refid="bower-css" />
+       
            <filelist refid="css" />
        </concat>
        
@@ -201,7 +194,7 @@
        
        <echo>Generate css file without version</echo>
        <concat destfile="${build.dir}/share.css">
-           <filelist refid="bower-css" />
+       
            <filelist refid="css" />
        </concat>
        
