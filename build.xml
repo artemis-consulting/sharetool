@@ -76,7 +76,7 @@
         </filelist>
         
         <filelist id="bootstrap" dir="${bootstrap.dir}">
-            <file name="dist/js/bootstrap.js" />
+            
         </filelist>
         <echo>${angular_bootstrap.dir}</echo>
 
@@ -86,7 +86,7 @@
         </filelist>
         
         <filelist id="components" dir="${components.dir}">   
-            <file name="${config.dir}/config.js" />
+            <file name="${config.dir}/config-build.js" />
             <file name="${version.dir}/version.js" />
             <file name="${version.dir}/version-directive.js" />
             <file name="${version.dir}/interpolate-filter.js" />
@@ -104,19 +104,6 @@
         <echo>Concatenating Bower Components into one file</echo>
         <concat destfile="${build.dir}/share.js">
             <filelist refid="global-variables" />
-            <filelist refid="app-js" />
-            <filelist refid="load-angular" />
-            <filelist refid="modernizer" />
-            <filelist refid="bootstrap" />
-            <filelist refid="bower" />              
-            <filelist refid="ui-bootstrap" />                     
-            <filelist refid="components" />
-        </concat>
-        
-        <echo>Concatenating Bower Components into one file with version</echo>
-        <concat destfile="${build.dir}/share-${VERSION}.js">
-            <filelist refid="global-variables" />
-            <filelist refid="load-angular" />
             <filelist refid="modernizer" />
             <filelist refid="bootstrap" />
             <filelist refid="bower" />              
@@ -125,14 +112,13 @@
             <filelist refid="components" />
         </concat>
         
+        
+        
         <replace file="${build.dir}/share.js" token="@env@" value="${env}" />
-        <replace file="${build.dir}/share-${VERSION}.js" token="@env@" value="${env}" />
         
         <replace file="${build.dir}/share.js" token="@ppath@" value="${ppath}" />
-        <replace file="${build.dir}/share-${VERSION}.js" token="@ppath@" value="${ppath}" />
         
         <replace file="${build.dir}/share.js" token="@domain@" value="${domain}" />
-        <replace file="${build.dir}/share-${VERSION}.js" token="@domain@" value="${domain}" />
         
         <concat destfile="${build.dir}/angular.min.js.map">
             <filelist refid="angular-modules" />
@@ -147,9 +133,6 @@
         <exec executable="java" output="${build.dir}/share.min.js">
            <arg line="-jar ${yuicompressor} --type js ${build.dir}/share.js "/>
         </exec> 
-        <exec executable="java" output="${build.dir}/share-${VERSION}.min.js">
-           <arg line="-jar ${yuicompressor} --type js ${build.dir}/share.js "/>
-        </exec>
     </target>
     
     
@@ -177,10 +160,12 @@
     </target>
     
     <target name="manage-css">
-       <filelist id="css" dir="${app.dir}/css">
-           <file name="bootstrap-3.3.1.min.css" />
-           <file name="share.css" />
-           <file name="general.css" />
+       <filelist id="css" dir="${app.dir}">
+           <file name="bower_components/bootstrap/dist/css/bootstrap.css" />
+           <file name="images/webicons-master/wi.css" />
+           <file name="bower_components/html5-boilerplate/dist/css/normalize.css" />           
+           <file name="bower_components/html5-boilerplate/dist/css/main.css" />
+           <file name="app.css" />
        </filelist>
        
        

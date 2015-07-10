@@ -2,14 +2,14 @@
     {
         "title": "Share",
         "content": "Share urls",
-        "template": "components/share/share.html",
+        "template": "build/components/share/share.html",
         "id": "share-this",
         "name": "share"
     },
     {
         "title": "Email",
         "content": "Email goes here",
-        "template": "components/email/email.html",
+        "template": "build/components/email/email.html",
         "id": "email-this",
         "name": "email"
     }

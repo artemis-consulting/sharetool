@@ -30,7 +30,7 @@ angular
             })
             
            
-            $http.get(config.json.share).success(function(data){
+            $http.get(config.projectPath + config.json.share).success(function(data){
                 $scope.shares = data;
             });
             

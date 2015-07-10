@@ -7,9 +7,9 @@ angular
         'getUrl',
         function($http, getUrl) {
             return {
-                projectPath : '',
+                projectPath : '/sharetool-artemis/',
                 template : {
-                    tabs : 'components/tabs/tabs.html'
+                    tabs : 'build/components/tabs/tabs.html'
                 },
                 url : {
                     tiny : 'http://urltinyfy.appspot.com/tinyurl?url=' + 
@@ -22,8 +22,8 @@ angular
                         '&callback=JSON_CALLBACK'                    
                 },
                 json : {
-                    share   : 'json/share.json',
-                    toolbars : 'json/toolbar.json'
+                    share   : 'build/json/share.json',
+                    toolbars : 'build/json/toolbar.json'
                 },
                 email : {
                     subject : document.title,
