@@ -21,7 +21,8 @@ angular
                 email   = '';
 
             $scope.sendEmail = function() { 
-                email = (typeof $scope.shareEmail !== 'object') 
+
+                email = (typeof $scope.shareEmail !== 'undefined') 
                             ? $scope.shareEmail : '';
                 
                 message = (typeof $scope.shareMessage !== 'object') 
