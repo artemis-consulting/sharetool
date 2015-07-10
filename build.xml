@@ -162,6 +162,7 @@
     <target name="manage-css">
        <filelist id="css" dir="${app.dir}">
            <file name="bower_components/bootstrap/dist/css/bootstrap.css" />
+           <file name="bower_components/bootstrap/dist/css/bootstrap-theme.css.map" />           
            <file name="images/webicons-master/wi.css" />
            <file name="bower_components/html5-boilerplate/dist/css/normalize.css" />           
            <file name="bower_components/html5-boilerplate/dist/css/main.css" />
@@ -182,6 +183,12 @@
        
            <filelist refid="css" />
        </concat>
+
+       <copy todir="${build.dir}" >  
+            <file name="app/bower_components/bootstrap/dist/css/bootstrap.css.map" />            
+            <file name="app/bower_components/bootstrap/dist/css/bootstrap-theme.css.map" />
+        </copy>
+
        
        <echo>Minify share.min.css</echo>
        <exec executable="java" output="${build.dir}/share.min.css">

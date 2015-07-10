@@ -19,7 +19,6 @@ angular
                  $http,
                  config) {
             $http.get(config.projectPath + config.json.toolbars).success(function(data){
-                console.log(data)
                 for(tab in data) {
                     data[tab].template = config.projectPath + data[tab].template;
                 }
